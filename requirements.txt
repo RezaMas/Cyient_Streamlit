@@ -3,4 +3,3 @@ plotly==5.9.0
 streamlit==1.25.0
 pandas==1.5.3
 pyxlsb==1.0.10
-1.0.10==1.24.3
