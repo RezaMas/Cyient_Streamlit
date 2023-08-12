@@ -13,6 +13,16 @@ print(os.getcwd())
 
 os.system('pip install --upgrade pip')
 
+
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+DATA_DIR = os.path.join(BASE_DIR, "Data_Streamlit")
+if not os.path.exists(DATA_DIR):
+    os.makedirs(DATA_DIR)
+
+
+
+
 # --------------------------------------------------------
 # Defining functions: Loading Data
 @st.cache
