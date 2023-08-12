@@ -105,7 +105,7 @@ st.sidebar.header('Input Parameters')
 
 
 # Directory where the dataframes are stored
-dir = '.\Data_Streamlit'
+dir = './Data_Streamlit'
 
 # Get a list of the dataframe names
 df_names = os.listdir(dir)
