@@ -91,40 +91,7 @@ def load_and_save_data(xlsb_file, output_folder):
     load_and_save_data("6172-All FLs Full Analysis for Struct_Quality JG Rev5_Chart.xlsb", "Data_Streamlit")
 
 # -------------------------
-# -------------------------
-# Merging dataframes
 
-# ----------- 'PU_Child_PG_and_WC_Data_Orig_Chks.csv'
-dir = '.\Data_Streamlit'
-
-table_path_1 = os.path.join(dir, 'Plnr_Group_Data_Origin_Checks.csv')
-table_1 = pd.read_csv(table_path_1)
-
-table_path_2 = os.path.join(dir, 'Work_Center_Data_Origin_Checks.csv')
-table_2 = pd.read_csv(table_path_2)
-
-table_path_3 = os.path.join(dir, 'Misc.csv')
-table_3 = pd.read_csv(table_path_3)
-
-# First merge table_1 and table_2
-merged_12 = table_1.merge(table_2, how='left', on='Site')
-# Then merge the result with table_3
-Merged_Output = merged_12.merge(table_3, how='left', on='Site')
-
-# Specify a file name for the output
-output_file = os.path.join(dir, 'PU_Child_PG_and_WC_Data_Orig_Chks.csv')
-Merged_Output.to_csv(output_file, index=False)
-
-# -------------------- Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S
-# the method of reading dataframe is  different of the previous part, just for education
-table_1 = pd.read_csv('.\Data_Streamlit\PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv')
-table_2 = pd.read_csv('.\Data_Streamlit\PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv')
-table_3 = pd.read_csv('.\Data_Streamlit\PU_Child_System_Status_Comparisons.csv')
-merged_12 = table_1.merge(table_2, how='left', on='Site')
-Merged_Output = merged_12.merge(table_3, how='left', on='Site')
-output_file = os.path.join(dir, 'Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S.csv')
-Merged_Output.to_csv(output_file, index=False)
-# --------------------------------------------------------------------
 # --------------------------------------------------------------------
 
 
