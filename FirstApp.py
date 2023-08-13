@@ -14,83 +14,83 @@ print(os.getcwd())
 os.system('pip install --upgrade pip')
 
 # --------------------------------------------------------
-# Defining functions: Loading Data
-@st.cache
-def load_and_save_data(xlsb_file, output_folder):
-    from openpyxl import load_workbook
-    df = [] # list
+# # Defining functions: Loading Data
+# @st.cache
+# def load_and_save_data(xlsb_file, output_folder):
+#     from openpyxl import load_workbook
+#     df = [] # list
 
-    with open_xlsb(xlsb_file) as wb:
-        with wb.get_sheet(1) as sheet: # 1 is the index of the sheet
-            for row in sheet.rows():
-                df.append([item.v for item in row]) # getting value from cell item  
+#     with open_xlsb(xlsb_file) as wb:
+#         with wb.get_sheet(1) as sheet: # 1 is the index of the sheet
+#             for row in sheet.rows():
+#                 df.append([item.v for item in row]) # getting value from cell item  
 
-    title= df[1]
-    print(title)
+#     title= df[1]
+#     print(title)
 
-    #---------------------------------------------
-    # Initializing the dictionary
-    dict_of_lists = {}
-    current_list_name = ""
+#     #---------------------------------------------
+#     # Initializing the dictionary
+#     dict_of_lists = {}
+#     current_list_name = ""
 
-    for i in range(len(title)):
-        if title[i] is not None:
-            # This is a new list
-            current_list_name = title[i]
-            dict_of_lists[current_list_name] = []
-            dict_of_lists[current_list_name].append(i)
-        elif current_list_name:
-            # Add index to the current list
-            dict_of_lists[current_list_name].append(i)
+#     for i in range(len(title)):
+#         if title[i] is not None:
+#             # This is a new list
+#             current_list_name = title[i]
+#             dict_of_lists[current_list_name] = []
+#             dict_of_lists[current_list_name].append(i)
+#         elif current_list_name:
+#             # Add index to the current list
+#             dict_of_lists[current_list_name].append(i)
 
-    # Print the resulting dictionary
-    for k, v in dict_of_lists.items():
-        print(f"{k}: {v}")
+#     # Print the resulting dictionary
+#     for k, v in dict_of_lists.items():
+#         print(f"{k}: {v}")
 
-    # -----------------------------------------------------
+#     # -----------------------------------------------------
 
-    header = df[2] # Get the header from the third row as a list
-    header[0] = 'Site'
+#     header = df[2] # Get the header from the third row as a list
+#     header[0] = 'Site'
 
-    # Identify the first None component in the first column
-    end_component = next((i for i, v in enumerate((item[0] for item in df[3:]), 3) if v is None), None)
-    df = pd.DataFrame(df[3:end_component], columns=header) # Create DataFrame excluding header
+#     # Identify the first None component in the first column
+#     end_component = next((i for i, v in enumerate((item[0] for item in df[3:]), 3) if v is None), None)
+#     df = pd.DataFrame(df[3:end_component], columns=header) # Create DataFrame excluding header
 
-    tables_dict = {}
+#     tables_dict = {}
 
-    # split columns
-    for k, v in dict_of_lists.items():
-        column_names = ['Site'] + [header[i] for i in v] # Select column names based on indices
-        tables_dict[k] = df[column_names] # Assign dataframe subset to dict
+#     # split columns
+#     for k, v in dict_of_lists.items():
+#         column_names = ['Site'] + [header[i] for i in v] # Select column names based on indices
+#         tables_dict[k] = df[column_names] # Assign dataframe subset to dict
 
-    if tables_dict:
-        # rename first key in dictionary
-        first_key = list(tables_dict.keys())[0]
-        tables_dict["Types of Functional Locations"] = tables_dict.pop(first_key)
-    else:
-        print("The dictionary is empty.")
+#     if tables_dict:
+#         # rename first key in dictionary
+#         first_key = list(tables_dict.keys())[0]
+#         tables_dict["Types of Functional Locations"] = tables_dict.pop(first_key)
+#     else:
+#         print("The dictionary is empty.")
 
-    # create output folder if it doesn't exist
-    os.makedirs(output_folder, exist_ok=True)
+#     # create output folder if it doesn't exist
+#     os.makedirs(output_folder, exist_ok=True)
 
-    # save tables to .csv files
-    for table_name, table_df in tables_dict.items():
-        # replace "/" with "_" in table names
-        safe_table_name = table_name.replace("/", "_")
-        safe_table_name = safe_table_name.replace(" ", "_")
-        safe_table_name = safe_table_name.replace("(", "_")
-        safe_table_name = safe_table_name.replace(")", "_")
-        safe_table_name = safe_table_name.replace("'", "_")
+#     # save tables to .csv files
+#     for table_name, table_df in tables_dict.items():
+#         # replace "/" with "_" in table names
+#         safe_table_name = table_name.replace("/", "_")
+#         safe_table_name = safe_table_name.replace(" ", "_")
+#         safe_table_name = safe_table_name.replace("(", "_")
+#         safe_table_name = safe_table_name.replace(")", "_")
+#         safe_table_name = safe_table_name.replace("'", "_")
 
-        table_df.to_csv(f'{output_folder}/{safe_table_name}.csv', index=False)
+#         table_df.to_csv(f'{output_folder}/{safe_table_name}.csv', index=False)
 
 
-    # Cleaning the empty columns of "FL Catg N (NAVI) UsrSt Checks.csv":
-    new_t = pd.read_csv(f'{output_folder}/FL_Catg_N__NAVI__UsrSt_Checks.csv')
-    new_t = new_t.dropna(how='all', axis=1)
-    new_t.to_csv(f"{output_folder}/FL_Catg_N__NAVI__UsrSt_Checks.csv" , index=False) # f: likes the f we already used in oother scripts!
-    # Calling the function:
-    load_and_save_data("6172-All FLs Full Analysis for Struct_Quality JG Rev5_Chart.xlsb", "Data_Streamlit")
+#     # Cleaning the empty columns of "FL Catg N (NAVI) UsrSt Checks.csv":
+#     new_t = pd.read_csv(f'{output_folder}/FL_Catg_N__NAVI__UsrSt_Checks.csv')
+#     new_t = new_t.dropna(how='all', axis=1)
+#     new_t.to_csv(f"{output_folder}/FL_Catg_N__NAVI__UsrSt_Checks.csv" , index=False) # f: likes the f we already used in oother scripts!
+#     # Calling the function:
+#     load_and_save_data("6172-All FLs Full Analysis for Struct_Quality JG Rev5_Chart.xlsb", "Data_Streamlit")
 
 # -------------------------
 # -------------------------
