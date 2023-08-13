@@ -119,9 +119,9 @@ Merged_Output.to_csv(output_file, index=False)
 
 # -------------------- Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S
 # the method of reading dataframe is  different of the previous part, just for education
-table_1 = pd.read_csv('.\Data_Streamlit\PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv')
-table_2 = pd.read_csv('.\Data_Streamlit\PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv')
-table_3 = pd.read_csv('.\Data_Streamlit\PU_Child_System_Status_Comparisons.csv')
+table_1 = pd.read_csv('./Data_Streamlit/PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv')
+table_2 = pd.read_csv('./Data_Streamlit/PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv')
+table_3 = pd.read_csv('./Data_Streamlit/PU_Child_System_Status_Comparisons.csv')
 merged_12 = table_1.merge(table_2, how='left', on='Site')
 Merged_Output = merged_12.merge(table_3, how='left', on='Site')
 output_file = os.path.join(dir, 'Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S.csv')
