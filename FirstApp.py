@@ -525,9 +525,65 @@ elif selected_df_name == 'PU_Child_PG_and_WC_Data_Orig_Chks.csv':
                              text_font_size=14,
                              x_axis_label=selected_df_name)
 
+elif selected_df_name == 'PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#f54291', '#542ad1'],
+                             legend_font_color='#000000',
+                             legend_font_size=12,
+                             text_color='#000000',
+                             text_font_size=14,
+                             x_axis_label=selected_df_name)
+    
+
+elif selected_df_name == 'PU_Child_System_Status_Comparisons.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#f54291', '#542ad1'],
+                             legend_font_color='#000000',
+                             legend_font_size=12,
+                             text_color='#000000',
+                             text_font_size=14,
+                             x_axis_label=selected_df_name)
+
+elif selected_df_name == 'Plnr_Group_Data_Origin_Checks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 2],
+                             main_row_index=0,
+                             main_colors=['#f54291', '#542ad1'],
+                             legend_font_color='#000000',
+                             legend_font_size=12,
+                             text_color='#000000',
+                             text_font_size=14,
+                             x_axis_label=selected_df_name)
+    
+elif selected_df_name == 'PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#f54291', '#542ad1'],
+                             legend_font_color='#000000',
+                             legend_font_size=12,
+                             text_color='#000000',
+                             text_font_size=14,
+                             x_axis_label=selected_df_name)
+
 elif selected_df_name == 'Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S.csv':
     create_stacked_bar_chart(df,
                              main_col_indices=[1, 12],
+                             main_row_index=0,
+                             main_colors=['#f54291', '#542ad1'],
+                             legend_font_color='#000000',
+                             legend_font_size=12,
+                             text_color='#000000',
+                             text_font_size=14,
+                             x_axis_label=selected_df_name)
+
+elif selected_df_name == 'Work_Center_Data_Origin_Checks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 2],
                              main_row_index=0,
                              main_colors=['#f54291', '#542ad1'],
                              legend_font_color='#000000',
