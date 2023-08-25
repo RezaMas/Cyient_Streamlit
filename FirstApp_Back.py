@@ -128,6 +128,8 @@ def plot_donut_chart(df, col_indices=[1, 5], row_index=0, legend_font_color='#66
     st.plotly_chart(fig)
 
 # -----------------
+# ina nemitoonan ba ham bashan: bar_width=0.2, bargap=.05
+
 
 def create_stacked_bar_chart(df, mode='stack', main_col_indices=[2, 4], main_row_index=0, main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3', '#A6D854', '#D755D5'],
                              sub_col_indices=None, sub_row_index=0, sub_colors=['#f54291', '#542ad1'],
