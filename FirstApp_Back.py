@@ -16,7 +16,7 @@ st.set_page_config(page_title='Streamlit App',
                     page_icon='Active', layout='wide')
 
 st.image('./logo.png', use_column_width=True)
-st.title('Sample Dashboard')
+st.title(':blue[Sample Dashboard]')
 
 # -------------
 
@@ -47,7 +47,7 @@ selected_df_name = st.sidebar.selectbox('Select a dataframe', df_names)
 def create_custom_table(df,
                           header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=10, header_alignment='center', header_line_color='#34495E', header_line_width=.75, header_height= 40,
                           cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=10, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25, cell_height= 30,
-                          color_back= 'rgba(0, 0, 0, 0)', column_width= [100, 150]): # column_width= [col1, col2, ...]
+                          color_back= 'rgba(0, 0, 0, 0)', column_width= [100, 150], title='title', title_color= 'ffffff', title_font_size= 18, width=950, height= 600): # column_width= [col1, col2, ...]
 
     # Convert the dataframe to a list of lists
     df_values = [df[col].tolist() for col in df.columns]
@@ -73,8 +73,13 @@ def create_custom_table(df,
     
     # Update legend font color and size
     fig.update_layout(
-        width= 800, # size of whole table (figure) including margin of table
-        height= 600,
+        width= width, # size of whole table (figure) including margin of table
+        height= height,
+        # title_text=title,
+        # title_font=dict(
+        #     color=title_color,
+        #     size=title_font_size
+        # ),
         paper_bgcolor= color_back # Set the background color
     )
     
@@ -123,14 +128,12 @@ def plot_donut_chart(df, col_indices=[1, 5], row_index=0, legend_font_color='#66
     st.plotly_chart(fig)
 
 # -----------------
-# ina nemitoonan ba ham bashan: bar_width=0.2, bargap=.05
-
 
 def create_stacked_bar_chart(df, mode='stack', main_col_indices=[2, 4], main_row_index=0, main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3', '#A6D854', '#D755D5'],
                              sub_col_indices=None, sub_row_index=0, sub_colors=['#f54291', '#542ad1'],
-                             legend_font_color='#000000', legend_font_size=11, text_color='#000000', text_font_size=11,
-                             x_axis_label=None, bar_width=0.2, bargap=.05, figure_width=400, figure_height=400,
-                             color_back= 'rgba(0, 0, 0, 0)', bar_back= 'rgba(0, 0, 0, 0)'):
+                             legend_font_color='#000000', legend_font_size=16, text_color='#000000', text_font_size=16,
+                             x_axis_label='Category', y_axis_label='Count', bar_width=0.2, bargap=.05, figure_width=400, figure_height=400,
+                             color_back= 'rgba(0, 0, 0, 0)', bar_back= 'rgba(0, 0, 0, 0)', title='title', title_color='#ffffff', title_font_size= 20):
 
     # Get data for the main Stacked Bar Chart
     main_labels = df.columns[main_col_indices[0]:main_col_indices[-1] + 1]
@@ -173,26 +176,22 @@ def create_stacked_bar_chart(df, mode='stack', main_col_indices=[2, 4], main_row
     # Create the layout
     layout = go.Layout(
         barmode='stack',
-        title='Stacked Bar Chart with Original Numbers Breakdown',
-        xaxis=dict(title='Category'),
-        yaxis=dict(title='Count'),
+        xaxis=dict(title=x_axis_label, titlefont=dict(color=title_color, size=title_font_size), tickfont=dict(color=text_color, size=text_font_size)),
+        yaxis=dict(title=y_axis_label, titlefont=dict(color=title_color, size=title_font_size), tickfont=dict(color=text_color, size=text_font_size)),
+        title=title,
+        title_font=dict(
+            color=title_color,
+            size=title_font_size
+        ),
         bargap=bargap,
         width=figure_width,
         height=figure_height,
-        showlegend=True
+        showlegend=False,
+        
     )
-
-    # Update x-axis label if provided
-    if x_axis_label:
-        layout.xaxis.title = x_axis_label
 
     # Create the figure
     fig = go.Figure(data=data, layout=layout)
-    
-    
-    
-    # Update the font size and color of the text
-    fig.update_traces(textfont_size=text_font_size, textfont_color=text_color)
 
     # Update legend font color and size (ghaedatan moshod toye go.Layout inaro nevesht)
     fig.update_layout(
@@ -222,12 +221,15 @@ df = pd.read_csv(df_path)
 col1, col2 = st.columns(2)
 with col1:
     # Create a custom table
+    
     # Write the name of the selected dataframe
-    st.write(f"Table: {selected_df_name}:")
+    #st.write(f"Table: {selected_df_name}:")
+    
     fig = create_custom_table(df,
-                              header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=10, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
-                              cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=10, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25)
-
+                              header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=16, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
+                              cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=16, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25,
+                              )
+    
     # Display the table in Streamlit
     st.plotly_chart(fig)
     with st.expander("See Explanation"):
@@ -246,20 +248,20 @@ with col2:
                                  main_col_indices=[2, 3],
                                  main_row_index=0,
                                  main_colors=['#48bdbb', '#4884bd'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 legend_font_color='#ffffff',
+                                 legend_font_size=16,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         plot_donut_chart(df,
                          col_indices=[4, 5],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#28455b', '#748c94'], line=None),
@@ -277,18 +279,18 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         plot_donut_chart(df,
                          col_indices=[2, 3],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#28455b', '#748c94'], line=None),
@@ -305,13 +307,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#E78AC3'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -319,8 +321,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[1, 3],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#4F81BD', '#8DA0CB', '#66C2A5'], line=None),
@@ -334,8 +336,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[1, 2],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
@@ -345,8 +347,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[3, 4],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#28455b', '#748c94'], line=None),
@@ -360,8 +362,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[1, 2],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
@@ -375,8 +377,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[1, 4],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
@@ -390,8 +392,8 @@ with col2:
         plot_donut_chart(df,
                          col_indices=[1, 4],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
@@ -408,18 +410,18 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         plot_donut_chart(df,
                          col_indices=[3, 4],
                          row_index=0,
-                         legend_font_size=11,
-                         text_font_size=11,
+                         legend_font_size=16,
+                         text_font_size=16,
                          textinfo='label+percent',
                          textposition='outside',
                          marker=dict(colors=['#28455b', '#748c94'], line=None),
@@ -440,13 +442,13 @@ with col2:
                                      main_colors=['#48bdbb'],
                                      legend_font_color='#406060',
                                      legend_font_size=11,
-                                     text_color='#406060',
-                                     text_font_size=11,
-                                     x_axis_label=selected_df_name,
+                                     text_color='#66C2A5',
+                                     text_font_size=16,
                                      bar_width=0.2,
                                      bargap=.1,
                                      figure_width=600,
-                                     figure_height=600)
+                                     figure_height=600,
+                                     title= selected_df_name)
             with st.expander("See Explanation"):
                 st.write('We will put the description of figures, here!')
         elif Misc_selection == 'PU_Child_PG_and_WC_Data_Orig_Chks':
@@ -457,8 +459,8 @@ with col2:
             # Create a custom table
             with col1:
                 tb = create_custom_table(t_df,
-                                         header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=10, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
-                                         cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=10, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25)
+                                         header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=14, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
+                                         cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=14, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25)
                 # Write the name of the selected dataframe
                 st.write("Table: PU_Child_PG_and_WC_Data_Orig_Chks")
                 # Display the table in Streamlit
@@ -472,13 +474,13 @@ with col2:
                                      main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#A6D854'],
                                      legend_font_color='#406060',
                                      legend_font_size=11,
-                                     text_color='#406060',
-                                     text_font_size=11,
-                                     x_axis_label=selected_df_name,
+                                     text_color='#66C2A5',
+                                     text_font_size=16,
                                      bar_width=0.2,
                                      bargap=.1,
                                      figure_width=600,
-                                     figure_height=600)
+                                     figure_height=600,
+                                     title= Misc_selection)
             with st.expander("See Explanation"):
                 st.write('We will put the description of figures, here!')
 
@@ -489,13 +491,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3', '#E1E055'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -506,13 +508,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -523,13 +525,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -540,13 +542,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -557,13 +559,13 @@ with col2:
                                  main_colors=['#48bdbb', '#E78AC3', '#8DA0CB', '#4884bd'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -574,13 +576,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
@@ -591,13 +593,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
     
@@ -608,13 +610,13 @@ with col2:
                                  main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#E78AC3'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
-                                 text_color='#406060',
-                                 text_font_size=11,
-                                 x_axis_label=selected_df_name,
+                                 text_color='#66C2A5',
+                                 text_font_size=16,
                                  bar_width=0.2,
                                  bargap=.1,
                                  figure_width=600,
-                                 figure_height=600)
+                                 figure_height=600,
+                                 title= selected_df_name)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
