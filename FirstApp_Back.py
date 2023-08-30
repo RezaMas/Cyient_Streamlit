@@ -1,3 +1,4 @@
+
 # Web App with Streamlit
 
 # Author: Reza Masoudian, Created on July 25, 2023
@@ -47,7 +48,7 @@ selected_df_name = st.sidebar.selectbox('Select a dataframe', df_names)
 def create_custom_table(df,
                           header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=10, header_alignment='center', header_line_color='#34495E', header_line_width=.75, header_height= 40,
                           cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=10, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25, cell_height= 30,
-                          color_back= 'rgba(0, 0, 0, 0)', column_width= [100, 150], title='title', title_color= 'ffffff', title_font_size= 18, width=950, height= 600): # column_width= [col1, col2, ...]
+                          color_back= 'rgba(0, 0, 0, 0)', column_width= [150, 150], title='title', title_color= 'ffffff', title_font_size= 18, width=1700, height= 600): # column_width= [col1, col2, ...]
 
     # Convert the dataframe to a list of lists
     df_values = [df[col].tolist() for col in df.columns]
@@ -220,23 +221,22 @@ df_path = os.path.join(dir, selected_df_name)
 df = pd.read_csv(df_path)
 # ------------------------- Table
 
-col1, col2 = st.columns(2)
-with col1:
-    # Create a custom table
-    
-    # Write the name of the selected dataframe
-    #st.write(f"Table: {selected_df_name}:")
-    
-    fig = create_custom_table(df,
-                              header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=16, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
-                              cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=16, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25,
-                              )
-    
-    # Display the table in Streamlit
-    st.plotly_chart(fig)
-    with st.expander("See Explanation"):
-        st.write(
-            'We will put the description of tables, here! (if loop would be needed)')
+
+# Create a custom table
+
+# Write the name of the selected dataframe
+#st.write(f"Table: {selected_df_name}:")
+
+fig = create_custom_table(df,
+                          header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=16, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
+                          cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=16, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25,
+                          )
+
+# Display the table in Streamlit
+st.plotly_chart(fig)
+with st.expander("See Explanation"):
+    st.write(
+        'We will put the description of tables, here! (if loop would be needed)')
 
 # ----------------------- Figures
 # Get selected dataframe
@@ -244,41 +244,204 @@ with col1:
 #df = pd.read_csv(selected_df_path)
 
 # Check the filename and call the appropriate function
-with col2:
-    if selected_df_name == 'Types_of_Functional_Locations.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[2, 3],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd'],
-                                 legend_font_color='#ffffff',
-                                 legend_font_size=16,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        plot_donut_chart(df,
-                         col_indices=[4, 5],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'Non-PU_MU_Object_Type_Analysis.csv':
-        new_df = df.iloc[:, [1, 4]]
-        create_stacked_bar_chart(new_df,
-                                 main_col_indices=[0, 1],
+if selected_df_name == 'Types_of_Functional_Locations.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[2, 3],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd'],
+                             legend_font_color='#ffffff',
+                             legend_font_size=16,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    plot_donut_chart(df,
+                     col_indices=[4, 5],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'Non-PU_MU_Object_Type_Analysis.csv':
+    new_df = df.iloc[:, [1, 4]]
+    create_stacked_bar_chart(new_df,
+                             main_col_indices=[0, 1],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    plot_donut_chart(df,
+                     col_indices=[2, 3],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=60,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'MU_Catg_Prof_Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 3],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#E78AC3'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'PU_Object_Type_Analysis.csv':
+    plot_donut_chart(df,
+                     col_indices=[1, 3],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#4F81BD', '#8DA0CB', '#66C2A5'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'PU_Child_Structure_Check.csv':
+    plot_donut_chart(df,
+                     col_indices=[1, 2],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    plot_donut_chart(df,
+                     col_indices=[3, 4],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'PU_CT_Check.csv':
+    plot_donut_chart(df,
+                     col_indices=[1, 2],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'Non-PU_MU_CT_&_Model_Analysis.csv':
+    plot_donut_chart(df,
+                     col_indices=[1, 4],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'PU_CT_&_Model_Analysis.csv':
+    plot_donut_chart(df,
+                     col_indices=[1, 4],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'FL_Catg_N__NAVI__UsrSt_Checks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 2],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    plot_donut_chart(df,
+                     col_indices=[3, 4],
+                     row_index=0,
+                     legend_font_size=16,
+                     text_font_size=16,
+                     textinfo='label+percent',
+                     textposition='outside',
+                     marker=dict(colors=['#28455b', '#748c94'], line=None),
+                     pull=[0, 0.03],
+                     rotation=180,
+                     hole=0.6)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'Misc.csv':
+    Misc_selection = st.selectbox(
+        'Pick a figure', ('Misc', 'PU_Child_PG_and_WC_Data_Orig_Chks'))
+    # Load the selected dataframe
+    if Misc_selection == 'Misc':
+        create_stacked_bar_chart(df,
+                                 main_col_indices=[1, 1],
                                  main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd'],
+                                 main_colors=['#48bdbb'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
                                  text_color='#66C2A5',
@@ -288,209 +451,29 @@ with col2:
                                  figure_width=600,
                                  figure_height=600,
                                  title= selected_df_name)
-        plot_donut_chart(df,
-                         col_indices=[2, 3],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=60,
-                         hole=0.6)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
+    elif Misc_selection == 'PU_Child_PG_and_WC_Data_Orig_Chks':
+        #t_path = os.path.join(dir, 'PU_Child_PG_and_WC_Data_Orig_Chks.csv')
+        #t_df = pd.read_csv(t_path)
+        t_df = pd.read_csv(
+            './Data_Streamlit_eff/PU_Child_PG_and_WC_Data_Orig_Chks.csv')
+        # Create a custom table
 
-    elif selected_df_name == 'MU_Catg_Prof_Chks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 3],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#E78AC3'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
+        tb = create_custom_table(t_df,
+                                 header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=14, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
+                                 cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=14, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25)
+        # Write the name of the selected dataframe
+        st.write("Table: PU_Child_PG_and_WC_Data_Orig_Chks")
+        # Display the table in Streamlit
+        st.plotly_chart(tb)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'PU_Object_Type_Analysis.csv':
-        plot_donut_chart(df,
-                         col_indices=[1, 3],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#4F81BD', '#8DA0CB', '#66C2A5'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'PU_Child_Structure_Check.csv':
-        plot_donut_chart(df,
-                         col_indices=[1, 2],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        plot_donut_chart(df,
-                         col_indices=[3, 4],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'PU_CT_Check.csv':
-        plot_donut_chart(df,
-                         col_indices=[1, 2],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#48bdbb', '#4884bd'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'Non-PU_MU_CT_&_Model_Analysis.csv':
-        plot_donut_chart(df,
-                         col_indices=[1, 4],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'PU_CT_&_Model_Analysis.csv':
-        plot_donut_chart(df,
-                         col_indices=[1, 4],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#48bdbb', '#4884bd', '#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'FL_Catg_N__NAVI__UsrSt_Checks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 2],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        plot_donut_chart(df,
-                         col_indices=[3, 4],
-                         row_index=0,
-                         legend_font_size=16,
-                         text_font_size=16,
-                         textinfo='label+percent',
-                         textposition='outside',
-                         marker=dict(colors=['#28455b', '#748c94'], line=None),
-                         pull=[0, 0.03],
-                         rotation=180,
-                         hole=0.6)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'Misc.csv':
-        Misc_selection = st.selectbox(
-            'Pick a figure', ('Misc', 'PU_Child_PG_and_WC_Data_Orig_Chks'))
-        # Load the selected dataframe
-        if Misc_selection == 'Misc':
-            create_stacked_bar_chart(df,
-                                     main_col_indices=[1, 1],
-                                     main_row_index=0,
-                                     main_colors=['#48bdbb'],
-                                     legend_font_color='#406060',
-                                     legend_font_size=11,
-                                     text_color='#66C2A5',
-                                     text_font_size=16,
-                                     bar_width=0.2,
-                                     bargap=.1,
-                                     figure_width=600,
-                                     figure_height=600,
-                                     title= selected_df_name)
-            with st.expander("See Explanation"):
-                st.write('We will put the description of figures, here!')
-        elif Misc_selection == 'PU_Child_PG_and_WC_Data_Orig_Chks':
-            #t_path = os.path.join(dir, 'PU_Child_PG_and_WC_Data_Orig_Chks.csv')
-            #t_df = pd.read_csv(t_path)
-            t_df = pd.read_csv(
-                './Data_Streamlit_eff/PU_Child_PG_and_WC_Data_Orig_Chks.csv')
-            # Create a custom table
-            with col1:
-                tb = create_custom_table(t_df,
-                                         header_fill_color='#34495E', header_font_color='#FFFF00', header_font_size=14, header_alignment='center', header_line_color='#34495E', header_line_width=.75,
-                                         cell_fill_color='#34495E', cell_font_color='#FFFFFF', cell_font_size=14, cell_alignment='center', cell_line_color='#34495E', cell_line_width=.25)
-                # Write the name of the selected dataframe
-                st.write("Table: PU_Child_PG_and_WC_Data_Orig_Chks")
-                # Display the table in Streamlit
-                st.plotly_chart(tb)
-                with st.expander("See Explanation"):
-                    st.write('We will put the description of figures, here!')
-            # Drawing figure
-            create_stacked_bar_chart(t_df,
-                                     main_col_indices=[1, 5],
-                                     main_row_index=0,
-                                     main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#A6D854'],
-                                     legend_font_color='#406060',
-                                     legend_font_size=11,
-                                     text_color='#66C2A5',
-                                     text_font_size=16,
-                                     bar_width=0.2,
-                                     bargap=.1,
-                                     figure_width=600,
-                                     figure_height=600,
-                                     title= Misc_selection)
-            with st.expander("See Explanation"):
-                st.write('We will put the description of figures, here!')
-
-    elif selected_df_name == 'PU_Child_PG_and_WC_Data_Orig_Chks.csv':
-        create_stacked_bar_chart(df,
+        # Drawing figure
+        create_stacked_bar_chart(t_df,
                                  main_col_indices=[1, 5],
                                  main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3', '#E1E055'],
+                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#A6D854'],
                                  legend_font_color='#406060',
                                  legend_font_size=11,
                                  text_color='#66C2A5',
@@ -499,128 +482,145 @@ with col2:
                                  bargap=.1,
                                  figure_width=600,
                                  figure_height=600,
-                                 title= selected_df_name)
+                                 title= Misc_selection)
         with st.expander("See Explanation"):
             st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 4],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'PU_Child_PG_and_WC_Data_Orig_Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 5],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3', '#E1E055'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'PU_Child_System_Status_Comparisons.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 4],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'PU_Child_UsrSt__Asset_Under_Const___AUCN__Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'Plnr_Group_Data_Origin_Checks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 2],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'PU_Child_System_Status_Comparisons.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 4],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#E78AC3', '#8DA0CB', '#4884bd'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'Plnr_Group_Data_Origin_Checks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 2],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 12],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'PU_Child_UsrSt__Not_on_Site___Decom___SOLD_DCOM__Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 4],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#E78AC3', '#8DA0CB', '#4884bd'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
-    elif selected_df_name == 'Work_Center_Data_Origin_Checks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 2],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
-    
-    elif selected_df_name == 'PU_Child_PG_and_WC_Data_Orig_Chks.csv':
-        create_stacked_bar_chart(df,
-                                 main_col_indices=[1, 5],
-                                 main_row_index=0,
-                                 main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#E78AC3'],
-                                 legend_font_color='#406060',
-                                 legend_font_size=11,
-                                 text_color='#66C2A5',
-                                 text_font_size=16,
-                                 bar_width=0.2,
-                                 bargap=.1,
-                                 figure_width=600,
-                                 figure_height=600,
-                                 title= selected_df_name)
-        with st.expander("See Explanation"):
-            st.write('We will put the description of figures, here!')
+elif selected_df_name == 'Usr_Stat_AUCN_SOLD_DCOM_and_Sys_S.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 12],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#E78AC3'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'Work_Center_Data_Origin_Checks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 2],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
+
+elif selected_df_name == 'PU_Child_PG_and_WC_Data_Orig_Chks.csv':
+    create_stacked_bar_chart(df,
+                             main_col_indices=[1, 5],
+                             main_row_index=0,
+                             main_colors=['#48bdbb', '#4884bd', '#8DA0CB', '#F296C4', '#E78AC3'],
+                             legend_font_color='#406060',
+                             legend_font_size=11,
+                             text_color='#66C2A5',
+                             text_font_size=16,
+                             bar_width=0.2,
+                             bargap=.1,
+                             figure_width=600,
+                             figure_height=600,
+                             title= selected_df_name)
+    with st.expander("See Explanation"):
+        st.write('We will put the description of figures, here!')
 
 # -----------------------------------------------------------
 
@@ -655,4 +655,3 @@ def main():
 
 if __name__ == "__main__":
     main()
-
