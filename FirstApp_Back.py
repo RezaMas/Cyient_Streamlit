@@ -234,6 +234,25 @@ fig = create_custom_table(df,
 
 # Display the table in Streamlit
 st.plotly_chart(fig)
+
+# ----------------------------------- Customize st.expander
+st.markdown(
+    '''
+    <style>
+    .streamlit-expanderHeader {
+        background-color: #6d7eb0;
+        color: #fae4d8; # Adjust this for expander header color
+    }
+    .streamlit-expanderContent {
+        background-color: white;
+        color: black; # Expander content color
+    }
+    </style>
+    ''',
+    unsafe_allow_html=True
+)
+# -------------------------------------------
+
 with st.expander("See Explanation"):
     st.write(
         'We will put the description of tables, here! (if loop would be needed)')
