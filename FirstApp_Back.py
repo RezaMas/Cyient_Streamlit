@@ -24,6 +24,14 @@ st.title(':blue[Sample Dashboard]')
 # Dashboard Features
 #st.sidebar.image('./logo_dashboard.png', use_column_width= True)
 
+st.markdown("""
+<style>
+    [data-testid=stSidebar] {
+        background-color: #c3e8cc50;
+    }
+</style>
+""", unsafe_allow_html=True)
+
 st.sidebar.header('Input Parameters')
 
 
