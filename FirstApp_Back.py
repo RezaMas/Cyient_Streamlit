@@ -263,7 +263,7 @@ st.markdown(
 
 with st.expander("See Explanation"):
     st.write(
-        'We will put the description of tables, here! (if loop would be needed)')
+        'We will put the description of tables, here!')
 
 # ----------------------- Figures
 # Get selected dataframe
