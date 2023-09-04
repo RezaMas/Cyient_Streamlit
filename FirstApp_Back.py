@@ -134,7 +134,7 @@ def plot_donut_chart(df, col_indices=[1, 5], row_index=0, legend_font_color='#66
 
     # Update legend font color and size
     fig.update_layout(
-        width= 800, # size of whole table (figure) including margin of table
+        width= 1000, # size of whole table (figure) including margin of table
         height= 600,
         legend=dict(
             font=dict(
