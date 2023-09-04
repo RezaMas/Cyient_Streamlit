@@ -32,7 +32,9 @@ st.markdown("""
 </style>
 """, unsafe_allow_html=True)
 
-st.sidebar.header('Input Parameters')
+#st.sidebar.header('Input Parameters')
+st.sidebar.markdown("<h1 style='color: #d9ffb5';'>Input Parameters</h3>", unsafe_allow_html=True)
+
 
 
 # Directory where the dataframes are stored
@@ -45,6 +47,16 @@ df_names = os.listdir(dir)
 df_names = [df for df in df_names if df.endswith('.csv')]
 
 # Sidebar selectbox for dataframe selection
+st.markdown(
+    """
+    <style>
+        .stSelectbox {
+            background-color: #D9D9D9;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
 selected_df_name = st.sidebar.selectbox('Select a dataframe', df_names)
 
 # --------------------------------------------------------------------
